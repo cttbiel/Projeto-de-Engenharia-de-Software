@@ -1,6 +1,7 @@
-import React from "react";
+import React, { type ErrorInfo, type ReactNode } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { UsuarioProvider, useUsuario } from "./contexts/UsuarioContext";
+import { UsuarioProvider } from "./contexts/UsuarioContext";
+import { RmProvider } from "./contexts/RmContext";
 
 import Login from "./Login/page";
 
@@ -8,17 +9,24 @@ import TelaPadrao from "./components/TelaPadrao"; // Importe TelaPadrao
 
 import "./App.css";
 
-class ErrorBoundary extends React.Component {
-  constructor(props) {
+interface ErrorBoundaryState {
+  hasError: boolean;
+}
+
+class ErrorBoundary extends React.Component<
+  { children?: ReactNode },
+  ErrorBoundaryState
+> {
+  constructor(props: { children?: ReactNode }) {
     super(props);
     this.state = { hasError: false };
   }
 
-  static getDerivedStateFromError(error) {
+  static getDerivedStateFromError(_error: Error): ErrorBoundaryState {
     return { hasError: true };
   }
 
-  componentDidCatch(error, errorInfo) {
+  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     console.error("Ocorreu um erro:", error, errorInfo);
   }
 
@@ -30,21 +38,12 @@ class ErrorBoundary extends React.Component {
   }
 }
 
-const RequireAuth = ({ children }) => {
-  const { usuario } = useUsuario();
-
-  if (!usuario) {
-    return <Navigate to="/Login" />;
-  }
-
-  return children;
-};
-
 function App() {
   return (
     <ErrorBoundary>
       <BrowserRouter>
         <UsuarioProvider>
+          <RmProvider>
           <Routes>
             {/* Rotas públicas (sem autenticação) */}
             <Route path="/" element={<Navigate to="/Login" replace />} />
@@ -60,6 +59,7 @@ function App() {
               }
             />
           </Routes>
+          </RmProvider>
         </UsuarioProvider>
       </BrowserRouter>
     </ErrorBoundary>

@@ -1,4 +1,6 @@
 [
+  { "label": "Gerar RM", "rota": "/GerarRM" },
+  { "label": "Autorizar RM", "rota": "/AutorizarRM" },
   { "label": "Tela 1 Administrador", "rota": "/Tela1Administrador" },
   { "label": "Tela 2 Administrador", "rota": "/Tela2Administrador" }
 ]

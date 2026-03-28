@@ -1,5 +1,4 @@
 import Cabecalho from "./Cabecalho";
-import Conteudo from "./Conteudo";
 import ConteudoSemMenu from "./ConteudoSemMenu";
 
 interface TelaSemMenuProps {

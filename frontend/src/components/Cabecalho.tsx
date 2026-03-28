@@ -21,10 +21,11 @@ function obterNomePapel(idtPapel: "A" | "F" | "G"): string {
 
 const Cabecalho = ({ logado }: CabecalhoProps) => {
   const navigate = useNavigate();
-  const { nomUsuario, idtPapel } = useUsuario();
+  const { nomUsuario, idtPapel, limparUsuario } = useUsuario();
   const desPapel = idtPapel ? obterNomePapel(idtPapel as "A" | "F" | "G") : "";
   const onClickBotaoSair = () => {
-    navigate("/");
+    limparUsuario();
+    navigate("/Login");
   };
 
   return (

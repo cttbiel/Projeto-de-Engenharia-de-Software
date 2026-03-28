@@ -1,5 +1,5 @@
 import { useEffect, useState, lazy, Suspense } from "react";
-import { useRoutes, useLocation } from "react-router-dom";
+import { useRoutes } from "react-router-dom";
 import Menu from "./Menu";
 import Cabecalho from "./Cabecalho";
 import Conteudo from "./Conteudo";
@@ -32,18 +32,12 @@ const getMenuJson = (idtPapel: string): MenuItem[] => {
 };
 
 export default function TelaPadrao() {
-  const [mostrarMenu, setMostrarMenu] = useState(true);
+  const mostrarMenu = true;
   const [menuItens, setMenuItens] = useState<MenuItem[]>([]);
-  const location = useLocation();
   const {
     idtPapel,
     /*tirar o setUsuario daqui quando tiver backend*/ setUsuario,
   } = useUsuario();
-
-  // Atualiza visibilidade do menu com base na rota
-  useEffect(() => {
-    setMostrarMenu(location.pathname === "/TelaPadrao");
-  }, [location.pathname]);
 
   // Atualiza menu dinamicamente ao mudar de perfil/papel
   useEffect(() => {
@@ -56,7 +50,7 @@ export default function TelaPadrao() {
     {
       path: "/",
       element: <Conteudo />,
-      children: menuItens.map(({ rota, label }) => {
+      children: menuItens.map(({ rota }) => {
         const Componente = lazy(
           () => import(`../${rota.substring(1)}/page.tsx`)
         );

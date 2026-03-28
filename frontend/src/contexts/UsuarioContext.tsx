@@ -1,4 +1,10 @@
-import { createContext, useContext, useState, ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useCallback,
+  ReactNode,
+} from "react";
 
 interface UsuarioContextData {
   codUsuarioCPF: string;
@@ -55,9 +61,16 @@ export const UsuarioProvider = ({ children }: UsuarioProviderProps) => {
     setIdtPapel(idtPapel);
     localStorage.setItem("idtPapel", idtPapel);
   };
-  const limparUsuario = () => {
-    localStorage.clear();
-  };
+
+  /** Encerra sessão sem apagar contas mock / outros dados do app (ex.: authLocalStorage). */
+  const limparUsuario = useCallback(() => {
+    localStorage.removeItem("codUsuarioCPF");
+    localStorage.removeItem("nomUsuario");
+    localStorage.removeItem("idtPapel");
+    setCodUsuarioCPF("");
+    setNomUsuario("");
+    setIdtPapel("");
+  }, []);
 
   return (
     <UsuarioContext.Provider

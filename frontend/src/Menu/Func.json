@@ -1,4 +1,6 @@
 [
+  { "label": "Gerar RM", "rota": "/GerarRM" },
+  { "label": "Autorizar RM", "rota": "/AutorizarRM" },
   { "label": "Cadastrar Cargo", "rota": "/CadastrarCargo" },
   { "label": "Tela 1 Funcionario", "rota": "/Tela1Funcionario" },
   { "label": "Tela 2 Funcionario", "rota": "/Tela2Funcionario" }
